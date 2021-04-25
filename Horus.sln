@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horus.Android", "Horus.Android\Horus.Android.csproj", "{1F4EAC6F-A338-4F77-B0A1-484F49F7B8F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{00E05C9E-DFE7-4140-ADD3-6EAB196F86B8} = {00E05C9E-DFE7-4140-ADD3-6EAB196F86B8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horus.iOS", "Horus.iOS\Horus.iOS.csproj", "{09CDDE89-9D94-4B30-8B46-FB42130EE652}"
 EndProject

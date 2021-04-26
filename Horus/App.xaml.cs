@@ -8,7 +8,7 @@ namespace Horus
     {
         public App()
         {
-            InitializeComponent();
+          InitializeComponent();
           
         }
 

@@ -98,6 +98,7 @@
                                      Text="Login"
                                      VerticalOptions="Center"
                                      FontSize="16"
+                                     Command="{Binding LoginCommand}"
                                      TextColor="#FFFFFF"
                                      BackgroundColor="#FA9390"
                                      CornerRadius="20"

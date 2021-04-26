@@ -1,4 +1,6 @@
 ﻿using Horus.Core.Helpers.Interface;
+using Horus.Core.Models;
+using Horus.Core.Services.Interfaces;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using System;
@@ -13,6 +15,7 @@ namespace Horus.Core.ViewModels
         #region Attributes
         private readonly IMvxNavigationService _navigationService;
         private readonly IStorageHelper _storageHelper;
+        private readonly ILoginService _loginService;
         private string _email;
         private string _password;
         const string emailRegex = @"( |^)[^ ]*@horus\.com( |$)";
@@ -21,11 +24,13 @@ namespace Horus.Core.ViewModels
         #region Constructor
         public LoginViewModel(
                               IMvxNavigationService navigationService,
-                              IStorageHelper storageHelper
+                              IStorageHelper storageHelper,
+                              ILoginService loginService
                               )
         {
-                _navigationService = navigationService;
+            _navigationService = navigationService;
             _storageHelper = storageHelper;
+            _loginService = loginService;
         }
         #endregion
 
@@ -55,6 +60,7 @@ namespace Horus.Core.ViewModels
         #region MVVM Commands
         // MVVM Commands
         public IMvxAsyncCommand LoginCommand => new MvxAsyncCommand(LoginAsync);
+       
 
         #endregion
 
@@ -64,12 +70,25 @@ namespace Horus.Core.ViewModels
         {
             try
             {
+                var user = new User
+                {
+                    EmailAddress = Email,
+                    Password = Password
+                };
+
+              var userSigned =  await _loginService.OnSignInAsync(user);
+               if (userSigned != null)
+                {
+                    await _storageHelper.SetAccessToken(userSigned.authorizationToken);
+
+                }
 
 
+           
             }
             catch (Exception ex)
             {
-            
+
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
         }

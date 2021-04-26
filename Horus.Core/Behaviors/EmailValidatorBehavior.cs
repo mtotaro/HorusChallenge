@@ -8,7 +8,7 @@ namespace Horus.Core.Behaviors
 {
     public class EmailValidatorBehavior : Behavior<Entry>
     {
-        const string emailRegex = @"( |^)[^ ]*@horus\.com( |$)";
+        const string emailRegex = @"( |^)[^ ]*@mail\.com( |$)";
 
         static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(NumericValidationBehavior), false);
 

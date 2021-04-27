@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:MvxContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:TypeArguments="viewModels:ChallengeViewModel"
+             xmlns:views="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+             xmlns:viewModels="clr-namespace:Horus.Core.ViewModels;assembly=Horus.Core"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Horus.Forms.Converters"
+             xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             mc:Ignorable="d"
+             xmlns:behaviour="clr-namespace:Horus.Core.Behaviors;assembly=Horus.Core"
+             BackgroundColor="White"
+             x:Class="Horus.Forms.Views.ChallengePage">
+    <views:MvxContentPage.Resources>
+        <local:CollectionViewBackgroundConverter x:Key="CollectionViewBackgroundConverter" />
+        <local:TextLabelConverter x:Key="TextLabelConverter"/>
+    </views:MvxContentPage.Resources>
+    <views:MvxContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+                <Label
+                    Padding="10,0,0,0"
+                    Text="Retos"
+                    FontAttributes="Bold"
+                     VerticalTextAlignment="Center"
+                     HorizontalOptions="StartAndExpand"
+                     VerticalOptions="Center"
+                    FontSize="24" />
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding CountChallengesCompleted}" FontAttributes="Bold" FontSize="14" TextColor="#FA9390"/>
+                            <Span Text="/"/>
+                            <Span Text="{Binding TotalChallenges}" FontAttributes="Bold" FontSize="14" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+            </StackLayout>
+
+            <CollectionView ItemsSource="{Binding ChallengeList}" 
+                                x:Name="list"
+                                SelectionMode="None">
+                                <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
+                                <!--SelectionChangedCommand="{Binding ShowSelectedItemCommand}"-->
+                <CollectionView.VerticalScrollBarVisibility>
+                    <OnPlatform x:TypeArguments="ScrollBarVisibility">
+                        <On Platform="Android" Value="Always"></On>
+                        <On Platform="iOS" Value="Never"></On>
+                    </OnPlatform>
+                </CollectionView.VerticalScrollBarVisibility>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="20" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout   Padding="15" >
+
+                            <material:MaterialCard Padding="15"
+                                           BackgroundColor="{Binding IsCompletedChallenge, Converter={StaticResource CollectionViewBackgroundConverter}}" 
+                                           Margin="5,2"
+                                           x:Name="frame"
+                                           CornerRadius="8">
+                                <material:MaterialCard.HasShadow>
+                                    <OnPlatform x:TypeArguments="x:Boolean">
+                                        <On Platform="Android" Value="True"></On>
+                                        <On Platform="iOS" Value="False"></On>
+                                    </OnPlatform>
+                                </material:MaterialCard.HasShadow>
+                                <material:MaterialCard.BorderColor>
+                                    <OnPlatform x:TypeArguments="Color">
+                                        <On Platform="Android" Value="AliceBlue"></On>
+                                    </OnPlatform>
+                                </material:MaterialCard.BorderColor>
+                                <material:MaterialCard.Elevation>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android" Value="7"></On>
+                                        <On Platform="iOS" Value="2"></On>
+                                    </OnPlatform>
+                                </material:MaterialCard.Elevation>
+
+                                <StackLayout >
+                                    <material:MaterialCard HorizontalOptions="FillAndExpand"
+                                      BackgroundColor="{Binding IsCompletedChallenge, Converter={StaticResource CollectionViewBackgroundConverter}}" 
+                                       Padding="0">
+                                        <material:MaterialCard.HasShadow>
+                                            <OnPlatform x:TypeArguments="x:Boolean">
+                                                <On Platform="Android" Value="True"></On>
+                                                <On Platform="iOS" Value="False"></On>
+                                            </OnPlatform>
+                                        </material:MaterialCard.HasShadow>
+                                        <Label Text="{Binding Title}" 
+                                                   TextColor="#1a1a1a"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="15"/>
+
+                                    </material:MaterialCard>
+                                    <Label Text="{Binding Description}"
+                                                   TextColor="{Binding IsCompletedChallenge, Converter={StaticResource TextLabelConverter}}"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="15"/>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                        <Label   VerticalTextAlignment="Center"
+                                                 TextColor="{Binding IsCompletedChallenge, Converter={StaticResource TextLabelConverter}}"
+                                                 HorizontalOptions="StartAndExpand"
+                                                 VerticalOptions="Center">
+                                            <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding CurrentPoints}" FontAttributes="Bold" FontSize="14" />
+                                                <Span Text="/"/>
+                                                <Span Text="{Binding TotalPoints}" FontAttributes="Bold" FontSize="14" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                        <Label TextColor="{Binding !IsCompletedChallenge, Converter={StaticResource CollectionViewBackgroundConverter}}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding CurrentPoints}" FontAttributes="Bold" FontSize="14" />
+                                                    <Span Text="%"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                    <ProgressBar x:Name="myprogress"  ProgressColor="{Binding !IsCompletedChallenge, Converter={StaticResource CollectionViewBackgroundConverter}}"  Progress="{Binding PercentageBar}"/>
+                                </StackLayout>
+
+                            </material:MaterialCard>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <StackLayout>
+                        <Label Text="There are no items in this Challenge.Add new items."
+                                    Margin="10,25,10,10"
+                                    FontSize="18"
+                                    HorizontalOptions="Fill"
+                                    HorizontalTextAlignment="Center" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </StackLayout>
+    </views:MvxContentPage.Content>
+</views:MvxContentPage>

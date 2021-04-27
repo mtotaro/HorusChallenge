@@ -10,6 +10,6 @@ namespace Horus.Core.Dtos.Challenge
         public string Title { get; set; }
         public string Description { get; set; }
         public int CurrentPoints { get; set; }
-        public int TotalPoint { get; set; }
+        public int TotalPoints { get; set; }
     }
 }

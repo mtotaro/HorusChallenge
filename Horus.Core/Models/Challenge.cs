@@ -9,7 +9,19 @@ namespace Horus.Core.Models
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int CurrentPoints { get; set; }
-        public int TotalPoint { get; set; }
+        public float CurrentPoints { get; set; }
+        public float TotalPoints { get; set; }
+        public double PercentageBar
+        {
+            get => Math.Round(CurrentPoints/TotalPoints,1);
+            set => PercentageBar = value;
+        }
+
+        public bool IsCompletedChallenge
+        {
+            get => CurrentPoints == TotalPoints;
+            set => IsCompletedChallenge = value;
+        }
+
     }
 }

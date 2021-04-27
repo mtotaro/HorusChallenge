@@ -34,7 +34,7 @@ namespace Horus.Core.Rest.Implementation
                 {
                     request.Headers.Clear();
                     var accessToken = token ?? await _storageHelper.GetAccessToken();
-                    request.Headers.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
+                    request.Headers.Authorization = new AuthenticationHeaderValue(accessToken);
 
                     // add content
                     if (method != HttpMethod.Get)

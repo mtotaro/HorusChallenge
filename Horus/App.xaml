@@ -8,6 +8,30 @@
         <ResourceDictionary>
             <Color x:Key="LabelColor">#828282</Color>
             <Color x:Key="LabelHeaderLoginColor">#FFFFFF</Color>
+            <Color x:Key="GrayBackgroundColor">#FAFAFA</Color>
+            <Color x:Key="PinkColor">#FA9390</Color>
+     
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource GrayBackgroundColor}"/>
+                <Setter Property="BarTextColor" Value="Black"/>
+            </Style>
+
+            <Style TargetType="StackLayout" x:Key="CommonStateStackLayout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup>
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                                Value="{StaticResource GrayBackgroundColor}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

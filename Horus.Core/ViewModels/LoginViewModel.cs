@@ -87,7 +87,7 @@ namespace Horus.Core.ViewModels
                     // call the challengeService 
                     var resultChallenge = await _challengeService.ChallengeList();
                     var auxChallenge = new List<Challenge>();
-                     foreach (var item in resultChallenge)
+                    foreach (var item in resultChallenge)
                     {
                         var singleChallenge = new Challenge()
                         {
@@ -95,7 +95,7 @@ namespace Horus.Core.ViewModels
                             CurrentPoints = item.CurrentPoints,
                             Description = item.Description,
                             Title = item.Title,
-                            TotalPoint = item.TotalPoint
+                            TotalPoints = item.TotalPoints
 
                         };
 
@@ -104,11 +104,7 @@ namespace Horus.Core.ViewModels
 
                     var challengeList = new MvxObservableCollection<Challenge>(auxChallenge);
                     await _navigationService.Navigate<ChallengeViewModel, MvxObservableCollection<Challenge>>(challengeList);
-
                 }
-
-
-
             }
             catch (Exception ex)
             {

@@ -18,7 +18,8 @@ namespace Horus.iOS
 
         public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
         {
-           
+            Rg.Plugins.Popup.Popup.Init();
+            XF.Material.iOS.Material.Init();
             UINavigationBar.Appearance.TintColor = UIColor.FromRGB(0, 153, 219);
             UINavigationBar.Appearance.Translucent = false;
             uiApplication.StatusBarStyle = UIStatusBarStyle.LightContent;

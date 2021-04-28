@@ -2,6 +2,10 @@
 using MvvmCross.IoC;
 
 using System;
+using MvvmCross;
+using Rg.Plugins.Popup.Contracts;
+using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace Horus.Core
 {
@@ -24,7 +28,11 @@ namespace Horus.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
-           
+            Mvx.IoCProvider.RegisterSingleton<IPopupNavigation>(() => { return PopupNavigation.Instance; });
+
+            Mvx.IoCProvider.RegisterSingleton<IMessagingCenter>(() => { return MessagingCenter.Instance; });
+
+
             // register the appstart object
             RegisterCustomAppStart<AppStart>();
         }

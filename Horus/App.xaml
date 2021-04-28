@@ -10,10 +10,34 @@
             <Color x:Key="LabelHeaderLoginColor">#FFFFFF</Color>
             <Color x:Key="GrayBackgroundColor">#FFFFFF</Color>
             <Color x:Key="PinkColor">#FA9390</Color>
-     
+            <Color x:Key="BlueColor">#0098DB</Color>
+
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource GrayBackgroundColor}"/>
                 <Setter Property="BarTextColor" Value="Black"/>
+            </Style>
+
+            <Style x:Key="primaryButton"
+                   TargetType="Button">
+                <Setter Property="CornerRadius">
+                    <OnPlatform x:TypeArguments="x:Int32">
+                        <On Platform="iOS" Value="20"/>
+                        <On Platform="Android" Value="60"></On>
+                    </OnPlatform>
+                </Setter>
+                <Setter Property="BackgroundColor" Value="{StaticResource BlueColor}"></Setter>
+                <Setter Property="WidthRequest" Value="350"></Setter>
+                <Setter Property="HeightRequest" Value="50"></Setter>
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="FontSize">
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS" Value="17"/>
+                        <On Platform="Android" Value="17"></On>
+                    </OnPlatform>
+                </Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                
             </Style>
 
             <Style TargetType="StackLayout" x:Key="CommonStateStackLayout">

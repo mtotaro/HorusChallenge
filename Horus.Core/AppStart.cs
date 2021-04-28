@@ -28,7 +28,7 @@ namespace Horus.Core
             try
             {
 
-                await NavigationService.Navigate<ChallengeViewModel>();
+                await NavigationService.Navigate<LoginViewModel>();
 
             }
             catch (Exception exception)

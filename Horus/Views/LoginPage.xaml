@@ -9,7 +9,6 @@
                       xmlns:controls="clr-namespace:Horus.Forms.Controls"
                       xmlns:triggers="clr-namespace:Horus.Forms.Triggers"
                       mc:Ignorable="d"
-                      Title="Login"
                       x:Class="Horus.Forms.Views.LoginPage"
                       NavigationPage.HasNavigationBar="False"
                       xmlns:behaviour="clr-namespace:Horus.Core.Behaviors;assembly=Horus.Core"
@@ -17,56 +16,79 @@
                       xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms">
     <views:MvxContentPage.Content>
         <StackLayout>
-            <Frame CornerRadius="40" 
+            <ActivityIndicator x:Name="loading" 
+                               IsVisible="{Binding IsLoading}"
+                               IsRunning="{Binding IsLoading}"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"/>
+            <StackLayout IsVisible="{Binding HideOnLoading}">
+                <Frame CornerRadius="40" 
                    Padding="0"
-                   Margin="0,-80,0,0"
+                   Margin="0,-110,0,0"
                    IsClippedToBounds="True">
-                <StackLayout>
-                <Image Source="background"
-                       Aspect="Fill"
-                       VerticalOptions="Center" />
-                </StackLayout>
+                    <Grid RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Grid.Column="0"
+                           Source="background"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill" 
+                           Aspect="Fill" />
+                        <Label Grid.Row="0" Grid.Column="0" Margin="40,0,0,90"
+                           Text="Bienvenido a" 
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="End"
+                           TextColor="White" 
+                           FontSize="22"/>
+                        <RelativeLayout Margin="40,0,0,40" HorizontalOptions="Start" VerticalOptions="End"      Grid.Row="0">
+                            <Image  Source="logo_w"  Aspect="AspectFit"  />
+                        </RelativeLayout>
 
-            </Frame>
-            <StackLayout   
+                    </Grid>
+
+
+                </Frame>
+                <StackLayout   
                 HorizontalOptions="Fill"
                 Orientation="Vertical"
                 Margin="40,10,40,0">
-                
+
                     <Grid VerticalOptions="Center"
                       HorizontalOptions="FillAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackLayout VerticalOptions="CenterAndExpand" Grid.Row="0"  >
-                        <Label
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackLayout VerticalOptions="CenterAndExpand" Grid.Row="0"  >
+                            <Label
                             Text="Email"
                             Margin="20,0,0,0"
                             TextColor="{StaticResource LabelColor}" FontSize="12" />
-                        <controls:RoundedEntry
+                            <controls:RoundedEntry
                        Keyboard="Email"
                        FontSize="16"
                        MaxLength="39"
                        x:Name="entry"
                        TextColor="#1A1A1A"    
-                      
                        mvx:Bi.nd="Text Email, Mode=TwoWay"
                        Placeholder="Enter contact Email">
-                            <Entry.Behaviors>
-                                <behaviour:EmailValidatorBehavior  x:Name="emailValidator"/>
-                            </Entry.Behaviors>
+                                <Entry.Behaviors>
+                                    <behaviour:EmailValidatorBehavior  x:Name="emailValidator"/>
+                                </Entry.Behaviors>
 
-                        </controls:RoundedEntry>
-                    </StackLayout>
-                </Grid>
-                        <Label
+                            </controls:RoundedEntry>
+                        </StackLayout>
+                    </Grid>
+                    <Label
                         Text="Contraseña"
                         Margin="20,0,0,0"
                         TextColor="{StaticResource LabelColor}" FontSize="12" />
 
-                <Grid>
-                <controls:RoundedEntry
+                    <Grid>
+                        <controls:RoundedEntry
                       
                        FontSize="16"
                        MaxLength="39"
@@ -75,25 +97,28 @@
                        Placeholder="Enter Password"
                        IsPassword="{Binding Source={x:Reference ShowPasswordActualTrigger}, Path=HidePassword}"/>
 
-                <ImageButton VerticalOptions="Center"
+                        <ImageButton VerticalOptions="Center"
                       Margin="0,0,10,0"
                      HeightRequest="20"
                      HorizontalOptions="End"
                      Source="eye_none_b">
-                        <ImageButton.Triggers>
-                            <EventTrigger Event="Clicked">
-                            <triggers:ShowPasswordTriggerAction ShowIcon="eye_b"
+                            <ImageButton.Triggers>
+                                <EventTrigger Event="Clicked">
+                                    <triggers:ShowPasswordTriggerAction ShowIcon="eye_b"
                                                                     HideIcon="eye_none_b"
                                                                     x:Name="ShowPasswordActualTrigger"/>
-                            </EventTrigger>
-                        </ImageButton.Triggers>
-                </ImageButton>
-                </Grid>
-                
-                <Label
+                                </EventTrigger>
+                            </ImageButton.Triggers>
+                        </ImageButton>
+                    </Grid>
+                    <Label
                         Margin="10,0,0,0"
                         Text="Olvidaste tu contraseña?"
-                       TextColor="{StaticResource LabelColor}" FontSize="12" />
+                       TextColor="{StaticResource LabelColor}" FontSize="12" >
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                     <Button      
                                      Text="Login"
                                      VerticalOptions="Center"
@@ -103,66 +128,69 @@
                                      BackgroundColor="#FA9390"
                                      CornerRadius="20"
                                      WidthRequest="30" HeightRequest="50"/>
-                <StackLayout     
+                    <StackLayout     
                          Orientation="Horizontal"
-                         HorizontalOptions="CenterAndExpand"
-                         VerticalOptions="CenterAndExpand"
-                         Padding="10"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center"
+                         Padding="10,40,10,0"
                              >
-                
-                    <ImageButton Source="instagram_g"
+
+                        <ImageButton Source="instagram_g"
                          BackgroundColor="Transparent"
                          HorizontalOptions="EndAndExpand"
-                         CornerRadius="10"       
+                         CornerRadius="10"
+                         Command="{Binding InstagramCommand}"
                          x:Name="instagramButton">
-                        <ImageButton.HeightRequest>
-                            <OnPlatform x:TypeArguments="x:Double">
-                                <On Platform="Android" Value="33"></On>
-                                <On Platform="iOS" Value="45"></On>
-                            </OnPlatform>
-                        </ImageButton.HeightRequest>
-                        <ImageButton.Margin>
-                            <OnPlatform x:TypeArguments="Thickness">
-                                <On Platform="iOS" Value="0,-55,5,0"></On>
-                                <On Platform="Android" Value="0,-45,12,0"></On>
-                            </OnPlatform>
-                        </ImageButton.Margin>
-                    </ImageButton>
-
-                    <ImageButton Source="facebook_g"
+                            <ImageButton.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android" Value="33"></On>
+                                    <On Platform="iOS" Value="45"></On>
+                                </OnPlatform>
+                            </ImageButton.HeightRequest>
+                            <ImageButton.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="0,-55,5,0"></On>
+                                    <On Platform="Android" Value="0,-45,12,0"></On>
+                                </OnPlatform>
+                            </ImageButton.Margin>
+                        </ImageButton>
+                        <ImageButton Source="facebook_g"
                          BackgroundColor="Transparent"
                          HorizontalOptions="EndAndExpand"
+                         Command="{Binding FacebookCommand}"
                          x:Name="facebookButton">
-                        <ImageButton.HeightRequest>
-                            <OnPlatform x:TypeArguments="x:Double">
-                                <On Platform="Android" Value="33"></On>
-                                <On Platform="iOS" Value="45"></On>
-                            </OnPlatform>
-                        </ImageButton.HeightRequest>
-                        <ImageButton.Margin>
-                            <OnPlatform x:TypeArguments="Thickness">
-                                <On Platform="iOS" Value="0,-55,5,0"></On>
-                                <On Platform="Android" Value="0,-45,12,0"></On>
-                            </OnPlatform>
-                        </ImageButton.Margin>
-                    </ImageButton>
+                            <ImageButton.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android" Value="33"></On>
+                                    <On Platform="iOS" Value="45"></On>
+                                </OnPlatform>
+                            </ImageButton.HeightRequest>
+                            <ImageButton.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="0,-55,5,0"></On>
+                                    <On Platform="Android" Value="0,-45,12,0"></On>
+                                </OnPlatform>
+                            </ImageButton.Margin>
+                        </ImageButton>
 
-                </StackLayout>
+                    </StackLayout>
 
 
 
-                <BoxView Color="#828282"
+                    <BoxView Color="#828282"
                         HeightRequest="0.2"
                         HorizontalOptions="Fill"
                         Margin="0,10"/>
-            <Button      
+                    <Button      
                                     Text="Registrarme"
                                      VerticalOptions="Center"
                                      FontSize="16"
                                      TextColor="#828282"
-                                     BackgroundColor="#F7F6F"
-                                     CornerRadius="50"
+                                     BackgroundColor="#F7F6F6"
+                                     CornerRadius="50"  
+                                     Command="{Binding RegisterCommand}"
                                      WidthRequest="30" HeightRequest="60"/>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </views:MvxContentPage.Content>

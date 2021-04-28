@@ -1,12 +1,17 @@
 ﻿using Horus.Core.Helpers.Interface;
+using Horus.Core.Messages;
 using Horus.Core.Models;
+using Horus.Core.Services.Interfaces;
+using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Horus.Core.ViewModels
 {
@@ -18,113 +23,31 @@ namespace Horus.Core.ViewModels
         private MvxObservableCollection<Challenge> _challengeList;
         private int _countChallengesCompleted;
         private int _totalChallenges;
+        private Challenge _selectedItem;
+        private readonly IMessagingCenter _messagingCenter;
+        private readonly IPopupNavigationService _popupNavigationService;
         #endregion
 
         #region Constructor
-        public ChallengeViewModel(IMvxNavigationService navigationService, IStorageHelper storageHelper)
+        public ChallengeViewModel(IMvxNavigationService navigationService, IStorageHelper storageHelper, IMessagingCenter messagingCenter, IPopupNavigationService popupNavigationService)
         {
             _navigationService = navigationService;
             _storageHelper = storageHelper;
+            _messagingCenter = messagingCenter;
+            _popupNavigationService = popupNavigationService;
             _challengeList = new MvxObservableCollection<Challenge>();
-
+         
         }
 
-        public override async Task Initialize()
-        {
-            await base.Initialize();
-            var chlg1 = new Challenge()
-            {
-                Id = new Guid("9ac61141-2a25-49a0-a1f4-029d395aa9de"),
-                Title = "Invitar Amigos II",
-                Description = "Invita a 10 amigos a participar en el proyecto para que compartan sus looks.",
-                CurrentPoints = 10,
-                TotalPoints = 10
-
-            };
-            var chlg2 = new Challenge()
-            {
-                Id = new Guid("595831ae-f2a4-4465-ac4b-720095358dd0"),
-                Title = "Experta en Looks",
-                Description = "Publica 50 looks y convertite en experta.",
-                CurrentPoints = 47,
-                TotalPoints = 50
-
-            };
-            var chlg3 = new Challenge()
-            {
-                Id = new Guid("6837d95f-a498-4afe-bb08-7cb82572b06f"),
-                Title = "Publicaciones III",
-                Description = "Realiza tus primeras 10 publicaciones de looks.",
-                CurrentPoints = 9,
-                TotalPoints = 10
-
-            };
-            try
-            {
-                ChallengeList = new MvxObservableCollection<Challenge>
-                {
-                    chlg1,
-                    chlg2,
-                    chlg3
-                 };
-
-                _totalChallenges = ChallengeList.Count;
-                _countChallengesCompleted = 0;
-                foreach (var item in ChallengeList)
-                {
-                    if (item.TotalPoints == item.CurrentPoints)
-                        _countChallengesCompleted++;
-
-                }
-
-
-
-
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-                throw;
-            }
-
-        }
 
         public override void Prepare(MvxObservableCollection<Challenge> challenges)
         {
             try
             {
                 base.Prepare();
-                var chlg1 = new Challenge()
-                {
-                    Id = new Guid("9ac61141-2a25-49a0-a1f4-029d395aa9de"),
-                    Title = "Invitar Amigos II",
-                    Description = "Invita a 10 amigos a participar en el proyecto para que compartan sus looks.",
-                    CurrentPoints = 10,
-                    TotalPoints = 10
-
-                };
-                var chlg2 = new Challenge()
-                {
-                    Id = new Guid("595831ae-f2a4-4465-ac4b-720095358dd0"),
-                    Title = "Experta en Looks",
-                    Description = "Publica 50 looks y convertite en experta.",
-                    CurrentPoints = 47,
-                    TotalPoints = 50
-
-                };
-                var chlg3 = new Challenge()
-                {
-                    Id = new Guid("6837d95f-a498-4afe-bb08-7cb82572b06f"),
-                    Title = "Publicaciones III",
-                    Description = "Realiza tus primeras 10 publicaciones de looks.",
-                    CurrentPoints = 9,
-                    TotalPoints = 10
-
-                };
-                ChallengeList = new MvxObservableCollection<Challenge>();
-                ChallengeList.Add(chlg1);
-                ChallengeList.Add(chlg2);
-                ChallengeList.Add(chlg3);
+                TotalChallenges = challenges.Count;
+                CountChallengesCompleted = challenges.Count(x => x.IsCompletedChallenge);
+                ChallengeList = new MvxObservableCollection<Challenge>(challenges);
 
             }
             catch (Exception ex)
@@ -170,16 +93,51 @@ namespace Horus.Core.ViewModels
             }
         }
 
+        public Challenge SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+            set
+            {
+                _selectedItem = value;
+                RaisePropertyChanged(() => SelectedItem);
+            }
+        }
+
         #endregion
 
         #region MVVM Commands
         // MVVM Commands
-
+        public IMvxCommand ShowSelectedItemCommand => new MvxAsyncCommand<Challenge>(ChallengeSelected);
+        //public IMvxCommand ShowSelectedItemCommand { get; private set; }
         #endregion
 
         #region Private methods
         // Private methods
+        private async Task ChallengeSelected(Challenge selectedChallenge)
+        {
+            if (SelectedItem == null)
+                return;
 
+            try
+            {
+                var message = new OkActionPopupMessage()
+                {
+                    Title = SelectedItem.Title,
+                    Description = SelectedItem.Description,
+                };
+
+                _messagingCenter.Send<ChallengeViewModel, OkActionPopupMessage>(this, Constants.AlertChallengeMsg, message);
+                SelectedItem = null;
+               
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
         #endregion
     }
 }

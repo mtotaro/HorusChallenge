@@ -7,6 +7,7 @@ using Android.Views;
 using MvvmCross.Forms.Platforms.Android.Views;
 using Plugin.CurrentActivity;
 using Plugin.Media;
+using Rg.Plugins.Popup;
 using System;
 using System.Threading.Tasks;
 
@@ -28,6 +29,7 @@ namespace Horus.Droid
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             await CrossMedia.Current.Initialize();
             XF.Material.Droid.Material.Init(this, savedInstanceState);
+            Popup.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;

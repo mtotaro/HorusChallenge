@@ -9,6 +9,7 @@
              xmlns:local="clr-namespace:Horus.Forms.Converters"
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="True"
              xmlns:behaviour="clr-namespace:Horus.Core.Behaviors;assembly=Horus.Core"
              BackgroundColor="White"
              x:Class="Horus.Forms.Views.ChallengePage">
@@ -17,12 +18,27 @@
         <local:TextLabelConverter x:Key="TextLabelConverter"/>
         <local:ProgressBarColorConverter x:Key="ProgressBarColorConverter"/>
         <local:TitleLabelConverter x:Key="TitleLabelConverter"/>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource GrayBackgroundColor}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
     </views:MvxContentPage.Resources>
     <views:MvxContentPage.Content>
-        <StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
+        <StackLayout >
+            <StackLayout Padding="20,0,30,0" Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill" >
                 <Label
-                    Padding="20,0,0,0"
+                  
                     Text="Retos"
                     FontAttributes="Bold"
                      VerticalTextAlignment="Center"
@@ -30,7 +46,7 @@
                      VerticalOptions="Center"
                     TextColor="#1a1a1a"
                     FontSize="24" />
-                <Label VerticalTextAlignment="Center" >
+                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" >
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{Binding CountChallengesCompleted}" FontAttributes="Bold" FontSize="14" TextColor="#FA9390"/>
@@ -44,9 +60,12 @@
 
             <CollectionView ItemsSource="{Binding ChallengeList}" 
                                 x:Name="list"
-                                SelectionMode="None">
-                                <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
-                                <!--SelectionChangedCommand="{Binding ShowSelectedItemCommand}"-->
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                SelectionChangedCommand="{Binding ShowSelectedItemCommand}"
+                            >
+                <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
+                <!--SelectionChangedCommand="{Binding ShowSelectedItemCommand}"-->
                 <CollectionView.VerticalScrollBarVisibility>
                     <OnPlatform x:TypeArguments="ScrollBarVisibility">
                         <On Platform="Android" Value="Always"></On>
@@ -104,7 +123,7 @@
                                         </Image>
                                     </StackLayout>
 
-                                  
+
                                     <Label Text="{Binding Description}"
                                                    TextColor="{Binding IsCompletedChallenge, Converter={StaticResource TextLabelConverter}}"
                                                    VerticalTextAlignment="Center"
@@ -115,13 +134,13 @@
                                                  HorizontalOptions="StartAndExpand"
                                                  VerticalOptions="Center">
                                             <Label.FormattedText>
-                                            <FormattedString>
-                                                <Span Text="{Binding CurrentPoints}" FontAttributes="Bold" FontSize="12" />
-                                                <Span Text="/"/>
-                                                <Span Text="{Binding TotalPoints}" FontAttributes="Bold" FontSize="12" />
-                                            </FormattedString>
-                                        </Label.FormattedText>
-                                    </Label>
+                                                <FormattedString>
+                                                    <Span Text="{Binding CurrentPoints}" FontAttributes="Bold" FontSize="12" />
+                                                    <Span Text="/"/>
+                                                    <Span Text="{Binding TotalPoints}" FontAttributes="Bold" FontSize="12" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                         <Label TextColor="{Binding IsCompletedChallenge, Converter={StaticResource ProgressBarColorConverter}}">
                                             <Label.FormattedText>
                                                 <FormattedString>

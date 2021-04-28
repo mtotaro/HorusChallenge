@@ -8,7 +8,7 @@
         <ResourceDictionary>
             <Color x:Key="LabelColor">#828282</Color>
             <Color x:Key="LabelHeaderLoginColor">#FFFFFF</Color>
-            <Color x:Key="GrayBackgroundColor">#FAFAFA</Color>
+            <Color x:Key="GrayBackgroundColor">#FFFFFF</Color>
             <Color x:Key="PinkColor">#FA9390</Color>
      
             <Style TargetType="NavigationPage">

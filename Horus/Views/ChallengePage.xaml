@@ -15,24 +15,27 @@
     <views:MvxContentPage.Resources>
         <local:CollectionViewBackgroundConverter x:Key="CollectionViewBackgroundConverter" />
         <local:TextLabelConverter x:Key="TextLabelConverter"/>
+        <local:ProgressBarColorConverter x:Key="ProgressBarColorConverter"/>
+        <local:TitleLabelConverter x:Key="TitleLabelConverter"/>
     </views:MvxContentPage.Resources>
     <views:MvxContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" >
                 <Label
-                    Padding="10,0,0,0"
+                    Padding="20,0,0,0"
                     Text="Retos"
                     FontAttributes="Bold"
                      VerticalTextAlignment="Center"
                      HorizontalOptions="StartAndExpand"
                      VerticalOptions="Center"
+                    TextColor="#1a1a1a"
                     FontSize="24" />
-                <Label>
+                <Label VerticalTextAlignment="Center" >
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{Binding CountChallengesCompleted}" FontAttributes="Bold" FontSize="14" TextColor="#FA9390"/>
                             <Span Text="/"/>
-                            <Span Text="{Binding TotalChallenges}" FontAttributes="Bold" FontSize="14" />
+                            <Span Text="{Binding TotalChallenges}" TextColor="#1a1a1a" FontAttributes="Bold" FontSize="14" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -81,25 +84,31 @@
                                 </material:MaterialCard.Elevation>
 
                                 <StackLayout >
-                                    <material:MaterialCard HorizontalOptions="FillAndExpand"
-                                      BackgroundColor="{Binding IsCompletedChallenge, Converter={StaticResource CollectionViewBackgroundConverter}}" 
-                                       Padding="0">
-                                        <material:MaterialCard.HasShadow>
-                                            <OnPlatform x:TypeArguments="x:Boolean">
-                                                <On Platform="Android" Value="True"></On>
-                                                <On Platform="iOS" Value="False"></On>
-                                            </OnPlatform>
-                                        </material:MaterialCard.HasShadow>
-                                        <Label Text="{Binding Title}" 
-                                                   TextColor="#1a1a1a"
-                                                   VerticalTextAlignment="Center"
-                                                   FontSize="15"/>
 
-                                    </material:MaterialCard>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                        <Label Text="{Binding Title}" 
+                                                   TextColor="{Binding IsCompletedChallenge, Converter={StaticResource TitleLabelConverter}}" 
+                                                   VerticalTextAlignment="Center"
+                                                   HorizontalOptions="StartAndExpand"
+                                                   VerticalOptions="Center"
+                                                   FontSize="16"/>
+                                        <Image Source="arrow_right_g">
+                                            <Image.Triggers>
+                                                <DataTrigger 
+                                                    TargetType="Image" 
+                                                    Binding="{Binding IsCompletedChallenge}"
+                                                    Value="True">
+                                                    <Setter Property="Source" Value="arrow_right_w" />
+                                                </DataTrigger>
+                                            </Image.Triggers>
+                                        </Image>
+                                    </StackLayout>
+
+                                  
                                     <Label Text="{Binding Description}"
                                                    TextColor="{Binding IsCompletedChallenge, Converter={StaticResource TextLabelConverter}}"
                                                    VerticalTextAlignment="Center"
-                                                   FontSize="15"/>
+                                                   FontSize="12"/>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                                         <Label   VerticalTextAlignment="Center"
                                                  TextColor="{Binding IsCompletedChallenge, Converter={StaticResource TextLabelConverter}}"
@@ -107,22 +116,23 @@
                                                  VerticalOptions="Center">
                                             <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding CurrentPoints}" FontAttributes="Bold" FontSize="14" />
+                                                <Span Text="{Binding CurrentPoints}" FontAttributes="Bold" FontSize="12" />
                                                 <Span Text="/"/>
-                                                <Span Text="{Binding TotalPoints}" FontAttributes="Bold" FontSize="14" />
+                                                <Span Text="{Binding TotalPoints}" FontAttributes="Bold" FontSize="12" />
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
-                                        <Label TextColor="{Binding !IsCompletedChallenge, Converter={StaticResource CollectionViewBackgroundConverter}}">
+                                        <Label TextColor="{Binding IsCompletedChallenge, Converter={StaticResource ProgressBarColorConverter}}">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="{Binding CurrentPoints}" FontAttributes="Bold" FontSize="14" />
+                                                    <Span Text="{Binding PercentageCompleted}" FontAttributes="Bold" FontSize="12" />
                                                     <Span Text="%"/>
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
                                     </StackLayout>
-                                    <ProgressBar x:Name="myprogress"  ProgressColor="{Binding !IsCompletedChallenge, Converter={StaticResource CollectionViewBackgroundConverter}}"  Progress="{Binding PercentageBar}"/>
+                                    <ProgressBar x:Name="myprogress" 
+                                                 ProgressColor="{Binding IsCompletedChallenge, Converter={StaticResource ProgressBarColorConverter}}"  Progress="{Binding PercentageBar}"/>
                                 </StackLayout>
 
                             </material:MaterialCard>

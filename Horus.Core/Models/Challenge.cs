@@ -16,6 +16,11 @@ namespace Horus.Core.Models
             get => Math.Round(CurrentPoints/TotalPoints,1);
             set => PercentageBar = value;
         }
+        public double PercentageCompleted
+        {
+            get => Math.Round((CurrentPoints*100) / TotalPoints, 1);
+            set => PercentageCompleted = value;
+        }
 
         public bool IsCompletedChallenge
         {

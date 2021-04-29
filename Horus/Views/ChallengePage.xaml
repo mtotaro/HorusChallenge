@@ -10,7 +10,6 @@
              xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="True"
-             xmlns:behaviour="clr-namespace:Horus.Core.Behaviors;assembly=Horus.Core"
              BackgroundColor="White"
              x:Class="Horus.Forms.Views.ChallengePage">
     <views:MvxContentPage.Resources>
@@ -62,10 +61,8 @@
                                 x:Name="list"
                                 SelectionMode="Single"
                                 SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                                SelectionChangedCommand="{Binding ShowSelectedItemCommand}"
-                            >
-                <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
-                <!--SelectionChangedCommand="{Binding ShowSelectedItemCommand}"-->
+                                SelectionChangedCommand="{Binding ShowSelectedItemCommand}">
+
                 <CollectionView.VerticalScrollBarVisibility>
                     <OnPlatform x:TypeArguments="ScrollBarVisibility">
                         <On Platform="Android" Value="Always"></On>

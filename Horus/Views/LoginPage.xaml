@@ -46,16 +46,12 @@
                         <RelativeLayout Margin="40,0,0,40" HorizontalOptions="Start" VerticalOptions="End"      Grid.Row="0">
                             <Image  Source="logo_w"  Aspect="AspectFit"  />
                         </RelativeLayout>
-
                     </Grid>
-
-
                 </Frame>
                 <StackLayout   
                 HorizontalOptions="Fill"
                 Orientation="Vertical"
                 Margin="40,10,40,0">
-
                     <Grid VerticalOptions="Center"
                       HorizontalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
@@ -72,7 +68,7 @@
                        FontSize="16"
                        MaxLength="39"
                        x:Name="entry"
-                       TextColor="#1A1A1A"    
+                       TextColor="{StaticResource BlackColor}"
                        mvx:Bi.nd="Text Email, Mode=TwoWay"
                        Placeholder="Enter contact Email">
                                 <Entry.Behaviors>
@@ -124,8 +120,8 @@
                                      VerticalOptions="Center"
                                      FontSize="16"
                                      Command="{Binding LoginCommand}"
-                                     TextColor="#FFFFFF"
-                                     BackgroundColor="#FA9390"
+                                     TextColor="{StaticResource LabelHeaderLoginColor}"
+                                     BackgroundColor="{StaticResource FA9390}"
                                      CornerRadius="20"
                                      WidthRequest="30" HeightRequest="50"/>
                     <StackLayout     
@@ -175,9 +171,7 @@
 
                     </StackLayout>
 
-
-
-                    <BoxView Color="#828282"
+                    <BoxView Color="{StaticResource LabelColor}"
                         HeightRequest="0.2"
                         HorizontalOptions="Fill"
                         Margin="0,10"/>
@@ -185,8 +179,8 @@
                                     Text="Registrarme"
                                      VerticalOptions="Center"
                                      FontSize="16"
-                                     TextColor="#828282"
-                                     BackgroundColor="#F7F6F6"
+                                     TextColor="{StaticResource LabelColor}"
+                                     BackgroundColor="{StaticResource ReturnButtonBackgroundColor}"
                                      CornerRadius="50"  
                                      Command="{Binding RegisterCommand}"
                                      WidthRequest="30" HeightRequest="60"/>
@@ -194,4 +188,4 @@
             </StackLayout>
         </StackLayout>
     </views:MvxContentPage.Content>
-    </views:MvxContentPage>
+</views:MvxContentPage>

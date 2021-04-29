@@ -26,6 +26,7 @@ namespace Horus.Core.ViewModels
         const string emailRegex = @"( |^)[^ ]*@mail\.com( |$)";
         private readonly IMessagingCenter _messagingCenter;
         private readonly IPopupNavigationService _popupNavigationService;
+        public bool CanNavigate { get; } = true;
         private bool _isLoading;
         private bool _hideOnLoading;
         #endregion
@@ -54,6 +55,14 @@ namespace Horus.Core.ViewModels
             RegisterCommand = new MvxAsyncCommand(RedirectRegister);
         }
         #endregion
+
+        public override void ViewAppearing()
+        {
+            base.ViewAppearing();
+            //did this because password wasnt updating in the ui 
+            Password = String.Empty;
+            Email = String.Empty;
+        }
 
         #region MVVM Properties
         public string Email
@@ -111,12 +120,11 @@ namespace Horus.Core.ViewModels
                 if (!ValidateEmail())
                     return;
 
-                var user = new User
+                var user = new Dtos.SignIn.UserSignInRequest
                 {
-                    EmailAddress = Email,
+                    Email = Email,
                     Password = Password
                 };
-
 
                 var userSigned = await _loginService.OnSignInAsync(user);
                 if (userSigned != null)
@@ -143,14 +151,14 @@ namespace Horus.Core.ViewModels
                     var challengeList = new MvxObservableCollection<Challenge>(auxChallenge);
 
                     await _navigationService.Navigate<ChallengeViewModel, MvxObservableCollection<Challenge>>(challengeList);
-
-                    //clean the model
-                    IsLoading = false;
-                    HideOnLoading = false;
-                    Email = String.Empty;
-                    Password = String.Empty;
-                    _password = String.Empty;
                 }
+                await Task.Delay(100);
+                //clean the model
+                IsLoading = false;
+                HideOnLoading = false;
+                Email = String.Empty;
+                Password = String.Empty;
+                _password = String.Empty;
             }
             catch (Exception ex)
             {

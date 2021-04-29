@@ -24,15 +24,9 @@ namespace Horus.Core.Services.Implementation
         }
 
 
-        public async Task<UserSignInResponse> OnSignInAsync(User userSignIn)
+        public async Task<UserSignInResponse> OnSignInAsync(UserSignInRequest userSignIn)
         {
-            var userSignInRequest = new UserSignInRequest
-            {
-                Email = userSignIn.EmailAddress,
-                Password = userSignIn.Password
-            };
-     
-            var loginResponse = await _restClient.MakeApiCall<UserSignInResponse>(Constants.ApiUrl + "UserSignIn", HttpMethod.Post, userSignInRequest);
+            var loginResponse = await _restClient.MakeApiCall<UserSignInResponse>(Constants.ApiUrl + "UserSignIn", HttpMethod.Post, userSignIn);
             return loginResponse;
         }
     }

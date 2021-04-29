@@ -28,7 +28,7 @@ namespace Horus.Forms.Views
             MessagingCenter.Subscribe<LoginViewModel, OkActionPopupMessage>(this, Constants.LoginMsg, async (sender, message) =>
             {
                 await PopupNavigation.Instance.PushAsync(new OkActionPopUp(message.Title, message.Description));
-            });
+            }); 
         }
 
         protected override void OnDisappearing()

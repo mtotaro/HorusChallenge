@@ -9,6 +9,6 @@ namespace Horus.Core.Services.Interfaces
 {
     public interface ILoginService
     {
-        Task<UserSignInResponse> OnSignInAsync(User userSignIn);
+        Task<UserSignInResponse> OnSignInAsync(UserSignInRequest userSignIn);
     }
 }

@@ -29,6 +29,7 @@ namespace Horus.Core.ViewModels
         public bool CanNavigate { get; } = true;
         private bool _isLoading;
         private bool _hideOnLoading;
+
         #endregion
 
         #region Constructor
@@ -151,6 +152,7 @@ namespace Horus.Core.ViewModels
                     var challengeList = new MvxObservableCollection<Challenge>(auxChallenge);
 
                     await _navigationService.Navigate<ChallengeViewModel, MvxObservableCollection<Challenge>>(challengeList);
+                    await RaisePropertyChanged(() => CanNavigate);
                 }
                 await Task.Delay(100);
                 //clean the model

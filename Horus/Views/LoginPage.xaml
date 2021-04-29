@@ -123,6 +123,7 @@
                                      Text="Login"
                                      VerticalOptions="Center"
                                      FontSize="16"
+                                     IsEnabled="{Binding CanNavigate}"
                                      Command="{Binding LoginCommand}"
                                      TextColor="#FFFFFF"
                                      BackgroundColor="#FA9390"

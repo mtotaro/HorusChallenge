@@ -9,10 +9,8 @@
             <Color x:Key="LabelColor">#828282</Color>
             <Color x:Key="LabelHeaderLoginColor">#FFFFFF</Color>
             <Color x:Key="GrayBackgroundColor">#FFFFFF</Color>
-            <Color x:Key="ReturnButtonBackgroundColor">#F7F6F6</Color>
             <Color x:Key="PinkColor">#FA9390</Color>
             <Color x:Key="BlueColor">#0098DB</Color>
-            <Color x:Key="BlackColor">#1A1A1A</Color>
 
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource GrayBackgroundColor}"/>
